@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"> 
+    <h:head> 
+    </h:head> 
+    <h:body>   
+        <h:form>
+            <p:panelGrid columns="1">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Altura" />  
+                    <p:inputText value="#{caracolC.altura}" id="alt"/>
+                    <p:outputLabel value="Sube" />
+                    <p:inputText value="#{caracolC.sube}" id="sub" />
+                    <p:outputLabel value="Baja" />             
+                    <p:inputText value="#{caracolC.resbala}" id="baj"/>
+                </p:panelGrid>
+                <p:panelGrid columns="1">
+                    <p:commandButton value="Calcular" action="#{caracolC.calcular()}" update="resultado"/>
+                    <p:inputTextarea rows="5" cols="30" value="#{caracolC.mensaje}" id="resultado"/>
+                    <p:commandButton value="Limpiar" action="#{caracolC.limpiar()}" update="resultado alt sub baj" />
+                </p:panelGrid>
+            </p:panelGrid>
+        </h:form>
+    </h:body>
+</html>
+

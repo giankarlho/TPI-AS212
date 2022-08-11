@@ -1,11 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"> 
     <h:head> 
+        <title>Caracol Web AS212</title>
     </h:head> 
     <h:body>   
-        <h:form>
+        <h:form>            
             <p:panelGrid columns="1">
                 <p:panelGrid columns="2">
                     <p:outputLabel value="Altura" />  
@@ -18,7 +21,7 @@
                 <p:panelGrid columns="1">
                     <p:commandButton value="Calcular" action="#{caracolC.calcular()}" update="resultado"/>
                     <p:inputTextarea rows="5" cols="30" value="#{caracolC.mensaje}" id="resultado"/>
-                    <p:commandButton value="Limpiar" action="#{caracolC.limpiar()}" update="resultado alt sub baj" />
+                    <p:commandButton value="Limpiar" action="#{caracolC.limpiar()}" update="resultado alt sub baj" />                    
                 </p:panelGrid>
             </p:panelGrid>
         </h:form>

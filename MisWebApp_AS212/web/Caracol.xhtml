@@ -7,24 +7,27 @@
     <h:head> 
         <title>Caracol Web AS212</title>
     </h:head> 
-    <h:body>   
-        <h:form>            
-            <p:panelGrid columns="1">
-                <p:panelGrid columns="2">
-                    <p:outputLabel value="Altura" />  
-                    <p:inputText value="#{caracolC.altura}" id="alt"/>
-                    <p:outputLabel value="Sube" />
-                    <p:inputText value="#{caracolC.sube}" id="sub" />
-                    <p:outputLabel value="Baja" />             
-                    <p:inputText value="#{caracolC.resbala}" id="baj"/>
-                </p:panelGrid>
+    <h:body> 
+        <center>
+            <h1 style="color:red">Caracol Web</h1>
+            <h:form>            
                 <p:panelGrid columns="1">
-                    <p:commandButton value="Calcular" action="#{caracolC.calcular()}" update="resultado"/>
-                    <p:inputTextarea rows="5" cols="30" value="#{caracolC.mensaje}" id="resultado"/>
-                    <p:commandButton value="Limpiar" action="#{caracolC.limpiar()}" update="resultado alt sub baj" />                    
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Altura" />  
+                        <p:inputText value="#{caracolC.altura}" id="alt"/>
+                        <p:outputLabel value="Sube" />
+                        <p:inputText value="#{caracolC.sube}" id="sub" />
+                        <p:outputLabel value="Baja" />             
+                        <p:inputText value="#{caracolC.resbala}" id="baj"/>
+                    </p:panelGrid>
+                    <p:panelGrid columns="1">
+                        <p:commandButton value="Calcular" action="#{caracolC.calcular()}" update="resultado"/>
+                        <p:inputTextarea rows="5" cols="30" value="#{caracolC.mensaje}" id="resultado"/>
+                        <p:commandButton value="Limpiar" action="#{caracolC.limpiar()}" update="resultado alt sub baj" />                    
+                    </p:panelGrid>
                 </p:panelGrid>
-            </p:panelGrid>
-        </h:form>
+            </h:form>
+        </center>
     </h:body>
 </html>
 

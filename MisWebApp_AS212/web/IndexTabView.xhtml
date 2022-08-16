@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"      
+      xmlns:p="http://primefaces.org/ui"> 
+    <h:head>
+        <title>Facelet Title</title>
+        <link href="resources/css/myStyle.css" rel="stylesheet" type="text/css"/>
+    </h:head>
+    <h:body>
+        <center>
+            <h1 style="color:blue">Mis aplicaciones Web con ContentFlow</h1>
+            <p:tabView>
+                <p:tab title="Caracol">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:graphicImage url="/resources/image/Caracol.png" class="image" />
+                        <p:link outcome="Caracol" value="CaracolWeb" />
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab title="Cajero">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:graphicImage url="/resources/image/Cajero.png" />
+                        <p:link outcome="Cajero" value="CajeroWeb" />
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab title="Calculadora">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:graphicImage url="/resources/image/Calculadora.png" />
+                        <p:link outcome="Calculadora" value="Calculadora" />
+                    </h:panelGrid>
+                </p:tab>
+            </p:tabView>
+        </center>
+    </h:body>
+</html>
+

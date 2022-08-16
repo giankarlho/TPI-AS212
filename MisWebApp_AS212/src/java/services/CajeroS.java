@@ -15,7 +15,6 @@ public class CajeroS {
             mensaje = mensaje + billete + " de " + x + " soles \n";
         }
         return mensaje;
-    }   
-    
+    }      
     
 }

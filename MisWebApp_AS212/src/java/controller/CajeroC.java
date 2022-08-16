@@ -22,6 +22,7 @@ public class CajeroC implements Serializable {
         monto = 0;
         mensaje = "";
     }
+    
     // Getter y Setter
 
     public int getTope() {

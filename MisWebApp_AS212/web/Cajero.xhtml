@@ -15,18 +15,23 @@
                 <p:panelGrid columns="1">
                     <p:panelGrid columns="2">
                         <p:outputLabel value="Tope" />
-                        <p:spinner value="#{cajeroC.tope}" min="1000" max="10000" stepFactor="20" id="tope" />
+                        <p:spinner value="#{cajeroC.tope}" min="1000" max="10000" 
+                                   stepFactor="20" id="tope" />
                         <p:outputLabel value="Monto" />
                         <p:inputText value="#{cajeroC.monto}" id="monto"/>
                     </p:panelGrid>
                     <p:panelGrid columns="1">
-                        <p:commandButton value="Calcular" update="mensaje" action="#{cajeroC.calcular()}" />
+                        <p:commandButton value="Calcular" update="mensaje"
+                                         action="#{cajeroC.calcular()}" />
                         <p:inputTextarea value="#{cajeroC.mensaje}" id="mensaje" />
-                        <p:commandButton value="Limpiar" update="tope monto mensaje" action="#{cajeroC.limpiar()}"/>
+                        <p:commandButton value="Limpiar" update="tope monto mensaje" 
+                                         action="#{cajeroC.limpiar()}"/>
                     </p:panelGrid>
                 </p:panelGrid>
             </h:form>
         </center>
     </h:body>
 </html>
+
+
 

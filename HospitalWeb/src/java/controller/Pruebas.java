@@ -1,6 +1,6 @@
 package controller;
 
-import dao.Conexion;
+import dao.Conexion2;
 import java.io.Serializable;
 import javax.enterprise.context.Dependent;
 import javax.inject.Named;
@@ -13,8 +13,8 @@ public class Pruebas implements Serializable{
     
     public void probarCnx() throws Exception{
         mensaje = "Sal mensaje de ahkí";
-        Conexion.conectar();
-        if (Conexion.cnx != null){
+        Conexion2.conectar();
+        if (Conexion2.cnx != null){
             mensaje = "Esta conectado";
         } else{
             mensaje = "No hay conexión !!!! revisar...";

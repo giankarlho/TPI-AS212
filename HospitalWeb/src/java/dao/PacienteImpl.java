@@ -91,11 +91,11 @@ public class PacienteImpl extends Conexion implements ICRUD<Paciente> {
     public List<Paciente> listarTodos(char tipo) throws Exception {
         List<Paciente> lista = new ArrayList<>();
         ResultSet rs;
-        String sql = " ";
+        String sql = "";
         if (tipo == 'A' || tipo == 'I') {
-            sql = "select * from paciente where ESTPAC='" + tipo + "' order by numpac desc";
+            sql = "select * from paciente where ESTPAC='" + tipo + "' order by IDPAC desc";
         } else {
-            sql = "select * from paciente order by numpac desc";
+            sql = "select * from paciente order by IDPAC desc";
         }        
         try {
             PreparedStatement ps = this.conectar().prepareStatement(sql);
@@ -121,5 +121,42 @@ public class PacienteImpl extends Conexion implements ICRUD<Paciente> {
         }
         return lista;
     }
+    
+    public List<String> autoCompleteUbigeo1(String consulta, String departamento) throws Exception{
+        List<String> lista = new ArrayList<>();
+        String sql = "SELECT TOP 10 CONCAT(PROUBI, ', ', DISUBI) as ubigeoDes from ubigeo where"
+                + "DPTUBI = ? AND DISUBI like ?";
+        try {
+            PreparedStatement ps = this.conectar().prepareStatement(sql);
+            ps.setString(1,departamento);
+            ps.setString(2,"%" + consulta + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                lista.add(rs.getString("ubigeoDes"));
+            }
+                
+        } catch (Exception e) {
+            
+        }
+        return lista;
+    }
+    
+    public List<String> autoCompleteUbigeo2(String consulta) throws Exception{
+        List<String> lista = new ArrayList<>();
+        String sql = "SELECT TOP 10 CONCAT(DPTUBI, ', ', PROUBI, ', ', DISUBI) as ubigeoDes from ubigeo where"
+                + " DISUBI like ?";
+        try {
+            PreparedStatement ps = this.conectar().prepareStatement(sql);
+            ps.setString(1,"%" + consulta + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                lista.add(rs.getString("ubigeoDes"));
+            }
+                
+        } catch (Exception e) {
+            
+        }
+        return lista;
+    }   
 
 }

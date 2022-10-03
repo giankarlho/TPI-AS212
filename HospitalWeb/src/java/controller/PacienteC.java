@@ -9,21 +9,26 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import jdk.nashorn.api.tree.TryTree;
 
 @Named(value = "pacienteC")
 @SessionScoped
 public class PacienteC implements Serializable{
 
+    private String departamento="";
     PacienteImpl dao;
-    Paciente model;
-    List<Paciente> lstPaciente;
+    private Paciente model;
+    private Paciente selectPaciente;
+    private List<Paciente> lstPaciente;
     
     public PacienteC() {
-        dao = new PacienteImpl();        
+        dao = new PacienteImpl(); 
+        model = new Paciente();
     }
     
     public void registrar(){
-        try {
+        try { 
+            System.out.println("model Fecha de Nacimiento: " + model.getNacimiento());
             dao.registrar(model);
             listar();
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,"Registrado", "Agregado con éxito"));
@@ -70,5 +75,62 @@ public class PacienteC implements Serializable{
             
         }
     }
+    
+    public List<String> completeTextUbigeo1 (String query) throws Exception{
+        try {
+            return dao.autoCompleteUbigeo1(query,departamento);
+        } catch (Exception e) {
+            throw e;
+        }
+    
+    }
+
+    public List<String> completeTextUbigeo2 (String query) throws Exception{
+        try {
+            return dao.autoCompleteUbigeo2(query);
+        } catch (Exception e) {
+            throw e;
+        }
+ 
+    }
+       
+    
+    // Getter y Setter
+    public Paciente getModel() {
+        return model;
+    }
+
+    public void setModel(Paciente model) {
+        this.model = model;
+    }
+
+    public List<Paciente> getLstPaciente() {
+        return lstPaciente;
+    }
+
+    public void setLstPaciente(List<Paciente> lstPaciente) {
+        this.lstPaciente = lstPaciente;
+    }
+
+    public Paciente getSelectPaciente() {
+        return selectPaciente;
+    }
+
+    public void setSelectPaciente(Paciente selectPaciente) {
+        this.selectPaciente = selectPaciente;
+    }
+
+    public String getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(String departamento) {
+        this.departamento = departamento;
+    }
+    
+    
+    
+    
+    
     
 }

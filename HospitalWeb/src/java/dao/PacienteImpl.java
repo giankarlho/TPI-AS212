@@ -12,8 +12,9 @@ public class PacienteImpl extends Conexion implements ICRUD<Paciente> {
 
     @Override
     public void registrar(Paciente pac) throws Exception {
-        String sql = "insert into paciente values (NOMPAC, APEPAC, SEXPAC, FNAPAC,"
-                + " DNIPAC, TELPAC, EMAPAC, NUMUBI,DIRPAC, GRSPAC, HICPAC,   ESTPAC)";
+        String sql = "insert into paciente "
+                + "(NOMPAC, APEPAC, SEXPAC, FNAPAC,DNIPAC, TELPAC, EMAPAC, NUMUBI,DIRPAC, GRSPAC, HICPAC, ESTPAC)"
+                + " values (?,?,?,?,?,?,?,?,?,?,?,?) ";
         try {
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, pac.getNombre());
@@ -124,8 +125,7 @@ public class PacienteImpl extends Conexion implements ICRUD<Paciente> {
     
     public List<String> autoCompleteUbigeo1(String consulta, String departamento) throws Exception{
         List<String> lista = new ArrayList<>();
-        String sql = "SELECT TOP 10 CONCAT(PROUBI, ', ', DISUBI) as ubigeoDes from ubigeo where"
-                + "DPTUBI = ? AND DISUBI like ?";
+        String sql = "SELECT TOP 10 CONCAT(PROUBI, ', ', DISUBI) as ubigeoDes from ubigeo where DPTUBI = ? AND DISUBI like ?";
         try {
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1,departamento);
@@ -136,7 +136,7 @@ public class PacienteImpl extends Conexion implements ICRUD<Paciente> {
             }
                 
         } catch (Exception e) {
-            
+            System.out.println("Error en PacienteImpl/autoCompleteUbigeo1: 👉 " + e.getMessage());
         }
         return lista;
     }
@@ -154,7 +154,7 @@ public class PacienteImpl extends Conexion implements ICRUD<Paciente> {
             }
                 
         } catch (Exception e) {
-            
+            System.out.println("Error en PacienteImpl/autoCompleteUbigeo2: 👉 " + e.getMessage());
         }
         return lista;
     }   

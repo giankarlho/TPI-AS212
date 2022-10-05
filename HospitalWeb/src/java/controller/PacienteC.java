@@ -9,7 +9,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import jdk.nashorn.api.tree.TryTree;
 
 @Named(value = "pacienteC")
 @SessionScoped
@@ -28,7 +27,7 @@ public class PacienteC implements Serializable{
     
     public void registrar(){
         try { 
-            System.out.println("model Fecha de Nacimiento: " + model.getNacimiento());
+            System.out.println("PacienteC/registrar model Fecha de Nacimiento: " + model.getNacimiento());
             dao.registrar(model);
             listar();
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,"Registrado", "Agregado con éxito"));
@@ -80,6 +79,7 @@ public class PacienteC implements Serializable{
         try {
             return dao.autoCompleteUbigeo1(query,departamento);
         } catch (Exception e) {
+            System.out.println("Error en listar PacienteC/completeTextUbigeo1: " + e.getMessage());
             throw e;
         }
     
@@ -94,6 +94,15 @@ public class PacienteC implements Serializable{
  
     }
        
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     // Getter y Setter
     public Paciente getModel() {
@@ -126,11 +135,6 @@ public class PacienteC implements Serializable{
 
     public void setDepartamento(String departamento) {
         this.departamento = departamento;
-    }
-    
-    
-    
-    
-    
+    }       
     
 }

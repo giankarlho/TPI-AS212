@@ -13,8 +13,8 @@ public class PacienteImpl extends Conexion implements ICRUD<Paciente> {
     @Override
     public void registrar(Paciente pac) throws Exception {
         String sql = "insert into paciente "
-                + "(NOMPAC, APEPAC, SEXPAC, FNAPAC,DNIPAC, TELPAC, EMAPAC, NUMUBI,DIRPAC, GRSPAC, HICPAC, ESTPAC)"
-                + " values (?,?,?,?,?,?,?,?,?,?,?,?) ";
+                + "(NOMPAC, APEPAC, SEXPAC, FNAPAC,DNIPAC, TELPAC, EMAPAC, NUMUBI,DIRPAC, GRSPAC, HICPAC)"
+                + " values (?,?,?,?,?,?,?,?,?,?,?) ";
         try {
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, pac.getNombre());
@@ -27,8 +27,7 @@ public class PacienteImpl extends Conexion implements ICRUD<Paciente> {
             ps.setString(8, pac.getUbigeo());
             ps.setString(9, pac.getDir());
             ps.setString(10, pac.getGrupoSanguineo());
-            ps.setString(11, pac.getHistoria());
-            ps.setString(12, "A");       // por defecto los nuevos registros son de estado activo
+            ps.setString(11, pac.getHistoria());            
             ps.executeUpdate();
             ps.close();
         } catch (Exception e) {
@@ -97,7 +96,7 @@ public class PacienteImpl extends Conexion implements ICRUD<Paciente> {
             sql = "select * from paciente where ESTPAC='" + tipo + "' order by IDPAC desc";
         } else {
             sql = "select * from paciente order by IDPAC desc";
-        }        
+        }
         try {
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             rs = ps.executeQuery();
@@ -122,41 +121,73 @@ public class PacienteImpl extends Conexion implements ICRUD<Paciente> {
         }
         return lista;
     }
-    
-    public List<String> autoCompleteUbigeo1(String consulta, String departamento) throws Exception{
+
+    public List<String> autoCompleteUbigeo1(String consulta, String departamento) throws Exception {
         List<String> lista = new ArrayList<>();
         String sql = "SELECT TOP 10 CONCAT(PROUBI, ', ', DISUBI) as ubigeoDes from ubigeo where DPTUBI = ? AND DISUBI like ?";
         try {
             PreparedStatement ps = this.conectar().prepareStatement(sql);
-            ps.setString(1,departamento);
-            ps.setString(2,"%" + consulta + "%");
+            ps.setString(1, departamento);
+            ps.setString(2, "%" + consulta + "%");
             ResultSet rs = ps.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 lista.add(rs.getString("ubigeoDes"));
             }
-                
+
         } catch (Exception e) {
             System.out.println("Error en PacienteImpl/autoCompleteUbigeo1: 👉 " + e.getMessage());
         }
         return lista;
     }
-    
-    public List<String> autoCompleteUbigeo2(String consulta) throws Exception{
+
+    public String obtenerCodigoUbigeo1(String cadenaUbi) throws Exception {
+        String sql = "select NUMUBI FROM UBIGEO WHERE CONCAT(PROUBI, ', ', DISUBI) = ?";
+        try {
+            PreparedStatement ps = this.conectar().prepareCall(sql);
+            ps.setString(1, cadenaUbi);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getString("NUMUBI");
+            }
+            return rs.getString("NUMUBI");
+        } catch (Exception e) {
+            System.out.println("Error en obtenerCodigoUbigeo " + e.getMessage());
+            throw e;
+        }
+    }
+
+    public List<String> autoCompleteUbigeo2(String consulta) throws Exception {
         List<String> lista = new ArrayList<>();
         String sql = "SELECT TOP 10 CONCAT(DPTUBI, ', ', PROUBI, ', ', DISUBI) as ubigeoDes from ubigeo where"
                 + " DISUBI like ?";
         try {
             PreparedStatement ps = this.conectar().prepareStatement(sql);
-            ps.setString(1,"%" + consulta + "%");
+            ps.setString(1, "%" + consulta + "%");
             ResultSet rs = ps.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 lista.add(rs.getString("ubigeoDes"));
             }
-                
+
         } catch (Exception e) {
             System.out.println("Error en PacienteImpl/autoCompleteUbigeo2: 👉 " + e.getMessage());
         }
         return lista;
-    }   
+    }
+
+    public String obtenerCodigoUbigeo2(String cadenaUbi) throws Exception {
+        String sql = "select NUMUBI FROM UBIGEO WHERE CONCAT(DPTUBI, ', ', PROUBI, ', ', DISUBI) = ?";
+        try {
+            PreparedStatement ps = this.conectar().prepareCall(sql);
+            ps.setString(1, cadenaUbi);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getString("NUMUBI");
+            }
+            return rs.getString("NUMUBI");
+        } catch (Exception e) {
+            System.out.println("Error en PacienteImpl/obtenerCodigoUbigeo: " + e.getMessage());
+            throw e;
+        }
+    }
 
 }

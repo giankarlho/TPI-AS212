@@ -1,7 +1,7 @@
 "use strict"
 
-window.addEventListener('load', function (){
-    console.log("Mensaje de prueba");
+window.addEventListener('load', function (){    
+    alert("Mensaje de prueba 2")
 });
 
 

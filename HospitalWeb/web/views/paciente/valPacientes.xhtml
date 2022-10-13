@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"> 
+    <h:head>
+        <title>Facelet Title</title>
+        <script src="../resources/js/Calendar.js" type="text/javascript"></script>
+        <f:event listener="#{pacienteC.listar()}" type="preRenderView" />
+    </h:head>
+    <h:body>
+        <f:view>
+            <!--Inicio del Formulario formReg-->
+            <h:form id="formReg">   
+                <p:growl showDetail="true" id="messages">
+                    <p:autoUpdate/>
+                </p:growl>
+                <center>
+                    <h:panelGrid columns="2" cellpadding="5" style="width: auto">
+                        <p:outputLabel value="Nombre" />
+                        <p:inputText value="#{pacienteC.model.nombre}" />
+
+                        <p:outputLabel value="Apellido" />
+                        <p:inputText value="#{pacienteC.model.apellido}" />
+
+                        <p:outputLabel value="Sexo" />
+                        <p:selectOneRadio id="sexo" value="#{pacienteC.model.sexo}" unselectable="true">
+                            <f:selectItem itemLabel="Masculino" itemValue="M" />
+                            <f:selectItem itemLabel="Femenino" itemValue="F" />
+                        </p:selectOneRadio>
+
+                        <p:outputLabel for="fechaNac" value="Fecha Nacimiento"/>  
+                        <p:datePicker id="fechaNac" placeholder="dia-mes-año" value="#{pacienteC.model.nacimiento}"
+                                      locale="es" monthNavigator="true" yearNavigator="true" showWeek="true" pattern="dd-MM-yyyy" mask="true" maxdate="@now"/>                        
+
+                        <p:outputLabel value="DNI" />
+                        <p:inputText value="#{pacienteC.model.dni}" maxlength="8">
+                            <p:keyFilter regEx="/[0-9]/" />
+                        </p:inputText>
+
+                        <p:outputLabel value="Teléfono" />
+                        <p:inputText value="#{pacienteC.model.telefono}" maxlength="9" >
+                            <p:keyFilter regEx="/[0-9]/" />
+                        </p:inputText>
+
+                        <p:outputLabel value="Correo" />
+                        <p:inputText value="#{pacienteC.model.mail}" />
+
+                        <p:outputLabel value="Departamento" />                        
+                        <p:selectOneMenu value="#{pacienteC.departamento}" >
+                            <f:selectItem itemLabel="Seleccione" noSelectionOption="true" />
+                            <f:selectItems value="#{ubigeoC.listadoDptos}" />
+                            <p:ajax update="distrito1" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Distrito1" />
+                        <p:autoComplete id="distrito1" value="#{pacienteC.model.ubigeo}" 
+                                        completeMethod="#{pacienteC.completeTextUbigeo1}" style="width: auto"/>
+
+                        <p:outputLabel value="Distrito2" />
+                        <p:autoComplete id="distrito2" value="#{pacienteC.model.ubigeo}" 
+                                        completeMethod="#{pacienteC.completeTextUbigeo2}" style="width: auto"/>
+
+                        <p:outputLabel value="Dirección" />
+                        <p:inputText value="#{pacienteC.model.dir}" />
+
+                        <p:outputLabel value="Grupo Sanguineo" />
+                        <p:selectOneMenu value="#{pacienteC.model.grupoSanguineo}">
+                            <f:selectItem itemLabel="Seleccione" noSelectionOption="true" />
+                            <f:selectItem itemLabel="O+" itemValue="O+" />
+                            <f:selectItem itemLabel="O-" itemValue="O-" />
+                            <f:selectItem itemLabel="A+" itemValue="A+" />
+                            <f:selectItem itemLabel="A-" itemValue="A-" />
+                            <f:selectItem itemLabel="B+" itemValue="B+" />
+                            <f:selectItem itemLabel="B-" itemValue="B-" />
+                            <f:selectItem itemLabel="AB+" itemValue="AB+" />
+                            <f:selectItem itemLabel="AB-" itemValue="AB-" />
+                        </p:selectOneMenu>  
+
+                        <p:outputLabel value="Historia" />
+                        <p:inputText value="#{pacienteC.model.historia}" />
+
+                        <p:commandButton value="Listar" actionListener="#{pacienteC.listar()}" update=":frmTablaPac:dataPaciente" />
+                        <p:commandButton value="Registrar" actionListener="#{pacienteC.registrar()}" update=":frmTablaPac:dataPaciente" />
+                    </h:panelGrid> 
+                </center>
+            </h:form>
+            <!--Fin del Formulario formReg-->
+            
+            <p:spacer height="0" />
+            
+            <!--Inicio del Listado-->
+            <h:form id="frmTablaPac">
+                <p:dataTable id="dataPaciente" var="pacientes" value="#{pacienteC.lstPaciente}" rowKey="#{pacientes.codigo}"
+                             selection="#{dtContextMenuView.selectedProduct}" selectionMode="single">
+                    <f:facet name="header">
+                        Listado de Pacientes
+                    </f:facet>
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{pacientes.nombre}" />
+                    </p:column>
+                    <p:column headerText="Apellido">
+                        <h:outputText value="#{pacientes.apellido}" />
+                    </p:column>
+                    <p:column headerText="Sexo">
+                        <h:outputText value="#{pacientes.sexo}" >
+                            <f:converter converterId="sexoConverter" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="DNI">
+                        <h:outputText value="#{pacientes.dni}" />
+                    </p:column>                    
+                    <p:column headerText="Dirección">
+                        <h:outputText value="#{pacientes.dir}" />
+                    </p:column>
+                    <p:column headerText="Dirección">
+                        <h:outputText value="#{pacientes.dir}" />
+                    </p:column>
+                    <p:column headerText="Dirección">
+                        <h:outputText value="#{pacientes.dir}" />
+                    </p:column>
+                    <f:facet name="footer">
+                        En total hay #{fn:length(pacienteC.lstPaciente)} registros
+                    </f:facet>
+                </p:dataTable>
+
+            </h:form>
+            <!--Fin del Listado-->          
+        </f:view>        
+    </h:body>
+</html>
+
+
+
+

@@ -28,13 +28,14 @@ public class PacienteC implements Serializable{
     public void registrar(){
         try { 
             System.out.println("PacienteC/registrar model Fecha de Nacimiento: " + model.getNacimiento());
+            model.setUbigeo(dao.obtenerCodigoUbigeo1(model.getUbigeo()));
+//            model.setUbigeo(dao.obtenerCodigoUbigeo2(model.getUbigeo()));
             dao.registrar(model);
             listar();
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,"Registrado", "Agregado con éxito"));
         } catch (Exception e) {
             System.out.println("Error en PacienteC / registrar " + e.getMessage());
-        }
-        
+        }        
     }
     
     public void modificar(){

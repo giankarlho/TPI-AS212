@@ -10,35 +10,16 @@
     <h:body>
         <div class="card">
             <h:form>
-                <p:panelMenu style="width:300px" >
-                    <p:submenu label="Pruebas">
-                        <p:menuitem value="Prueba1 JavaScript" outcome="views/pruebas/Prueba1.xhtml" icon="pi pi-save"/>
-                        <p:menuitem value="Validaciones" outcome="views/pruebas/Validaciones.xhtml" icon="pi pi-save"/>                        
-                    </p:submenu>                    
+                <p:panelMenu style="width:300px" >                  
                     <p:submenu label="Pacientes">
-                        <p:menuitem value="Registro" outcome="views/Pacientes.xhtml" icon="pi pi-save"/>
-                        <p:menuitem value="Listado" outcome="views/Pacientes.xhtml" icon="pi pi-refresh"/>
-                        <p:menuitem value="Reportes" outcome="views/Pacientes.xhtml" icon="pi pi-times"/>
-                    </p:submenu>
-                    <p:submenu label="Proveedores">
-                        <p:menuitem value="Registro" url="http://www.primefaces.org" icon="pi pi-external-link"/>
-                        <p:menuitem value="Listado" outcome="views/Pacientes.xhtml" icon="pi pi-upload"/>
-                    </p:submenu>
-                    <p:submenu label="Medicina">
-                        <p:menuitem value="Registro" url="http://www.primefaces.org" icon="pi pi-external-link"/>
-                        <p:menuitem value="Listado" outcome="views/Pacientes.xhtml" icon="pi pi-upload"/>
-                    </p:submenu>
-                    <p:submenu label="Venta">
-                        <p:menuitem value="Generación" url="http://www.primefaces.org" icon="pi pi-external-link"/>
-                        <p:menuitem value="Consultas" outcome="views/Pacientes.xhtml" icon="pi pi-upload"/>
-                    </p:submenu>
-                    <p:submenu label="Compra">
-                        <p:menuitem value="Registro" url="http://www.primefaces.org" icon="pi pi-external-link"/>
-                        <p:menuitem value="Consultas" outcome="views/Pacientes.xhtml" icon="pi pi-upload"/>
-                    </p:submenu>                    
-                    <p:submenu label="Reportes">
-                        <p:menuitem value="Venta" url="http://www.primefaces.org" icon="pi pi-external-link"/>
-                        <p:menuitem value="Compra" outcome="views/Pacientes.xhtml" icon="pi pi-upload"/>
+                        <p:menuitem value="Registro" outcome="views/paciente/insPacientes.xhtml" icon="pi pi-save"/>
+                        <p:menuitem value="Tipos Ubigeo" outcome="views/paciente/valPacientes.xhtml" icon="pi pi-refresh"/>                        
+                    </p:submenu>              
+                    <p:submenu label="Pruebas">
+                        <p:menuitem value="JavaScript into" outcome="views/pruebas/Prueba1.xhtml" icon="pi pi-save"/>
+                        <p:menuitem value="JavaScript externo" outcome="views/pruebas/Prueba2.xhtml" icon="pi pi-save"/>
+                        <p:menuitem value="Validaciones" outcome="views/pruebas/Validaciones.xhtml" icon="pi pi-save"/>                        
+                        <p:menuitem value="Validaciones" outcome="views/pruebas/MouseJS.xhtml" icon="pi pi-save"/>                        
                     </p:submenu>                    
                 </p:panelMenu>
             </h:form>

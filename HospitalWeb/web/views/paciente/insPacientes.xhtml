@@ -5,7 +5,8 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"> 
     <h:head>
-        <title>Facelet Title</title>
+        <title>Registro Paciente</title>
+        <f:event listener="#{pacienteC.listar()}" type="preRenderView" />
         <script src="../resources/js/Calendar.js" type="text/javascript"></script>
     </h:head>
     <h:body>
@@ -19,21 +20,20 @@
                     <h:panelGrid columns="2" cellpadding="5" style="width: auto">
                         <p:outputLabel value="Nombre" />
                         <p:inputText value="#{pacienteC.model.nombre}" />
-                        
+
                         <p:outputLabel value="Apellido" />
                         <p:inputText value="#{pacienteC.model.apellido}" />
-                        
+
                         <p:outputLabel value="Sexo" />
                         <p:selectOneRadio id="sexo" value="#{pacienteC.model.sexo}" unselectable="true">
                             <f:selectItem itemLabel="Masculino" itemValue="M" />
                             <f:selectItem itemLabel="Femenino" itemValue="F" />
                         </p:selectOneRadio>
-                        
+
                         <p:outputLabel for="fechaNac" value="Fecha Nacimiento"/>  
-                        <p:datePicker id="fechaNac" placeholder="dia-mes-año" value="#{pacienteC.model.nacimiento}"
-                                      locale="es" monthNavigator="true" yearNavigator="true" showWeek="true" pattern="dd-MM-yyyy" mask="true" maxdate="@now"/>
-                        
-                        
+                        <p:datePicker id="fechaNac"  value="#{pacienteC.model.nacimiento}"
+                                      locale="es" monthNavigator="true"  pattern="dd-MM-yyyy" />                        
+
                         <p:outputLabel value="DNI" />
                         <p:inputText value="#{pacienteC.model.dni}" maxlength="8">
                             <p:keyFilter regEx="/[0-9]/" />
@@ -42,29 +42,24 @@
                         <p:inputText value="#{pacienteC.model.telefono}" maxlength="9" >
                             <p:keyFilter regEx="/[0-9]/" />
                         </p:inputText>
-                        
+
                         <p:outputLabel value="Correo" />
                         <p:inputText value="#{pacienteC.model.mail}" />
-                        
-                        <p:outputLabel value="Distrito0" />
-                        <p:inputText value="#{pacienteC.model.ubigeo}" />
-                        
+
                         <p:outputLabel value="Departamento" />                        
                         <p:selectOneMenu value="#{pacienteC.departamento}" >
                             <f:selectItem itemLabel="Seleccione" noSelectionOption="true" />
                             <f:selectItems value="#{ubigeoC.listadoDptos}" />
-                            <p:ajax update="distrito1" />
+                            <p:ajax update="distrito" />
                         </p:selectOneMenu>
-                        
-                        <p:outputLabel value="Distrito1" />
-                        <p:autoComplete id="distrito1" value="#{pacienteC.model.ubigeo}" 
+
+                        <p:outputLabel value="Distrito" />
+                        <p:autoComplete id="distrito" value="#{pacienteC.model.ubigeo}" 
                                         completeMethod="#{pacienteC.completeTextUbigeo1}" style="width: auto"/>
-                        <p:outputLabel value="Distrito2" />
-                        <p:autoComplete id="distrito2" value="#{pacienteC.model.ubigeo}" 
-                                        completeMethod="#{pacienteC.completeTextUbigeo2}" style="width: auto"/>
+
                         <p:outputLabel value="Dirección" />
                         <p:inputText value="#{pacienteC.model.dir}" />
-                        
+
                         <p:outputLabel value="Grupo Sanguineo" />
                         <p:selectOneMenu value="#{pacienteC.model.grupoSanguineo}">
                             <f:selectItem itemLabel="Seleccione" noSelectionOption="true" />
@@ -77,10 +72,10 @@
                             <f:selectItem itemLabel="AB+" itemValue="AB+" />
                             <f:selectItem itemLabel="AB-" itemValue="AB-" />
                         </p:selectOneMenu>  
-                        
+
                         <p:outputLabel value="Historia" />
                         <p:inputText value="#{pacienteC.model.historia}" />
-                        
+
                         <p:commandButton value="Listar" actionListener="#{pacienteC.listar()}" update=":frmTablaPac:dataPaciente" />
                         <p:commandButton value="Registrar" actionListener="#{pacienteC.registrar()}" update=":frmTablaPac:dataPaciente" />
                     </h:panelGrid> 
@@ -90,34 +85,54 @@
             <p:spacer height="0" />
             <!--Inicio del Listado-->
             <h:form id="frmTablaPac">
-                <p:dataTable id="dataPaciente" var="pacientes" value="#{pacienteC.lstPaciente}" rowKey="#{pacientes.codigo}"
-                             selection="#{dtContextMenuView.selectedProduct}" selectionMode="single">
+                <p:dataTable id="dataPaciente" var="pacientes" value="#{pacienteC.lstPaciente}" widgetVar="wpacTable" rows="10" paginator="true"
+                             rowKey="#{pacientes.codigo}" 
+                             selection="#{dtContextMenuView.selectedProduct}" selectionMode="single"  
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                             rowsPerPageTemplate="5,10,15"
+                             globalFilterFunction="#{dtFilterView.globalFilterFunction}">                             
                     <f:facet name="header">
-                        Listado de Pacientes
-                    </f:facet>
 
+                        <p:outputPanel>
+                            <h:outputText value="Buscar:" />
+                            <p:inputText id="globalFilter" onkeyup="PF('wpacTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                        </p:outputPanel>
+
+                    </f:facet>
+                    <p:column headerText="Id" sortBy="#{pacientes.codigo}" style="margin-bottom:40px">
+                        <h:outputText value="#{pacientes.codigo}" />
+                    </p:column>
                     <p:column headerText="Nombre">
                         <h:outputText value="#{pacientes.nombre}" />
                     </p:column>
                     <p:column headerText="Apellido">
                         <h:outputText value="#{pacientes.apellido}" />
                     </p:column>
-                    <p:column headerText="DNI">
-                        <h:outputText value="#{pacientes.dni}" />
-                    </p:column>
-                    <p:column headerText="Dirección">
-                        <h:outputText value="#{pacientes.dir}" />
-                    </p:column>
                     <p:column headerText="Sexo">
                         <h:outputText value="#{pacientes.sexo}" >
                             <f:converter converterId="sexoConverter" />
                         </h:outputText>
                     </p:column>
+                    <p:column headerText="Nacimiento">
+                        <h:outputText value="#{pacientes.nacimiento}" />
+                    </p:column>
+                    <p:column headerText="DNI">
+                        <h:outputText value="#{pacientes.dni}" />
+                    </p:column>
+                    <p:column headerText="Teléfono">
+                        <h:outputText value="#{pacientes.telefono}" />
+                    </p:column>
+                    <p:column headerText="Dirección">
+                        <h:outputText value="#{pacientes.dir}" />
+                    </p:column>                 
+
                 </p:dataTable>
 
             </h:form>
             <!--Fin del Listado-->          
-        </f:view>        
+        </f:view>          
+
     </h:body>
 </html>
 
@@ -125,4 +140,3 @@
 
 
 
-<!--                        <p:calendar placeholder="dia-mes-año" value="#{pacienteC.model.nacimiento}" id="fechaNac" pattern="dd-MM-yyyy" mask="true" maxdate="@now"  />                    -->
